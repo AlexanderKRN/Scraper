@@ -6,7 +6,7 @@ namespace Scraper.API.Common
     [ApiController]
     [Produces("application/json")]
     [Route("api/[controller]")]
-    public abstract class ApplicationControllerl : ControllerBase
+    public abstract class ApplicationController : ControllerBase
     {
         protected new IActionResult Ok(object? result = null)
         {

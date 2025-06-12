@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using Scraper.Domain.Common;
 
 namespace Scraper.API.Common
 {
+    [ApiController]
+    [Produces("application/json")]
+    [Route("api/[controller]")]
     public abstract class ApplicationControllerl : ControllerBase
     {
         protected new IActionResult Ok(object? result = null)

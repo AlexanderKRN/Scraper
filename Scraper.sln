@@ -5,11 +5,13 @@ VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scraper.API", "Scraper.API\Scraper.API.csproj", "{38CB085A-0521-477F-AE6B-3CE91B1691E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraper.Domain", "Scraper.Domain\Scraper.Domain.csproj", "{EB8CEA0F-1702-4F38-88E3-DFB06DCA2AD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scraper.Domain", "Scraper.Domain\Scraper.Domain.csproj", "{EB8CEA0F-1702-4F38-88E3-DFB06DCA2AD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraper.Infrastructure", "Scraper.Infrastructure\Scraper.Infrastructure.csproj", "{C4D1C46E-5B06-4893-A885-704228BAE899}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scraper.Infrastructure", "Scraper.Infrastructure\Scraper.Infrastructure.csproj", "{C4D1C46E-5B06-4893-A885-704228BAE899}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraper.Application", "Scraper.Application\Scraper.Application.csproj", "{A51CE20D-FCA0-4767-B591-3635BE683BEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scraper.Application", "Scraper.Application\Scraper.Application.csproj", "{A51CE20D-FCA0-4767-B591-3635BE683BEE}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C4A3BE9B-12F5-473A-A8FD-AA0336C1A1DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{A51CE20D-FCA0-4767-B591-3635BE683BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A51CE20D-FCA0-4767-B591-3635BE683BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A51CE20D-FCA0-4767-B591-3635BE683BEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4A3BE9B-12F5-473A-A8FD-AA0336C1A1DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4A3BE9B-12F5-473A-A8FD-AA0336C1A1DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4A3BE9B-12F5-473A-A8FD-AA0336C1A1DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4A3BE9B-12F5-473A-A8FD-AA0336C1A1DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

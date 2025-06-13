@@ -29,9 +29,9 @@ namespace Scraper.Domain.Common
                 return new("value.is.invalid", $"{label} ошибочно");
             }
 
-            public static Error FileSizeInvalid()
+            public static Error DataSizeInvalid()
             {
-                return new("invalid.file.size", "Превышен размер файла в 5 мБ");
+                return new("invalid.data.size", "Превышен размер данных в 5 мБ");
             }
 
         }

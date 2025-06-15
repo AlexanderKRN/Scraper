@@ -17,7 +17,8 @@ namespace Scraper.Infrastructure
             this IServiceCollection services, IConfiguration configuration)
         {
             services
-                .AddDataStorages(configuration);
+                .AddDataStorages(configuration)
+                .AddProviders();
 
             return services;
         }
@@ -28,6 +29,14 @@ namespace Scraper.Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ScraperWriteDbContext>();
             services.AddScoped<ScraperReadDbContext>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddProviders(
+            this IServiceCollection services)
+        {
+            services.AddScoped<IHtmlAgilityProvider, HtmlAgilityProvider>();
 
             return services;
         }

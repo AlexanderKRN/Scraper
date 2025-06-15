@@ -2,6 +2,7 @@
 using Scraper.API.Common;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using Scraper.Infrastructure;
+using Scraper.Application;
 
 namespace Scraper.API
 {
@@ -20,6 +21,7 @@ namespace Scraper.API
             builder.Services.AddSwaggerGen();
 
             builder.Services
+                .AddApplication()
                 .AddInfrastructure(builder.Configuration);
 
             var app = builder.Build();

@@ -3,12 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Scraper.Application.Providers;
 using Scraper.Domain.Entities;
-using Scraper.Infrastructure.ReadModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scraper.Infrastructure.DbContexts
 {

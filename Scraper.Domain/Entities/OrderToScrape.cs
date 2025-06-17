@@ -1,11 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
 using Scraper.Domain.Common;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scraper.Domain.Entities
 {
@@ -45,6 +39,5 @@ namespace Scraper.Domain.Entities
 
             return new OrderToScrape(paths);
         }
-
     }
 }

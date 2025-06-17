@@ -1,10 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
 using Scraper.Domain.Common;
+using Scraper.Domain.Entities;
 
-namespace Scraper.Infrastructure.Providers
+namespace Scraper.Application.Providers
 {
     public interface IHtmlAgilityProvider
     {
-        Task<Result<bool, Error>> GetData(CancellationToken ct);
+        Task<Result<ScrapingNotice, Error>> GetDataByUrl(string url, CancellationToken ct);
     }
 }

@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Newtonsoft.Json;
 using Scraper.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Scraper.Domain.ValueObject;
 
 namespace Scraper.Infrastructure.DbConfiguration.Write
 {
@@ -19,14 +16,16 @@ namespace Scraper.Infrastructure.DbConfiguration.Write
 
             builder.Property(n => n.Url).IsRequired();
 
+            builder.Property(n => n.ErrorScraping).IsRequired(false);
+
             builder.Property(n => n.CreatedAt).IsRequired();
 
-            builder.ComplexProperty(n => n.Data, b =>
-            {
-                b.Property(d => d.Head).HasColumnName("data_head");
-                b.Property(d => d.Title).HasColumnName("data_title");
-                b.Property(d => d.Meta).HasColumnName("data_meta");
-            });
+            builder.Property(n => n.Headers)
+              .HasConversion(
+                  metadata => JsonConvert.SerializeObject(metadata),
+                  json => JsonConvert.DeserializeObject<Headers>(json)
+              )
+              .HasColumnType("jsonb");
         }
     }
 }

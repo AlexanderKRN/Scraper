@@ -2,12 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Scraper.Application.Providers;
 using Scraper.Infrastructure.DbContexts;
+using Scraper.Infrastructure.Jobs;
 using Scraper.Infrastructure.Providers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scraper.Infrastructure
 {
@@ -18,7 +14,8 @@ namespace Scraper.Infrastructure
         {
             services
                 .AddDataStorages(configuration)
-                .AddProviders();
+                .AddProviders()
+                .AddJobs();
 
             return services;
         }
@@ -37,6 +34,13 @@ namespace Scraper.Infrastructure
             this IServiceCollection services)
         {
             services.AddScoped<IHtmlAgilityProvider, HtmlAgilityProvider>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddJobs(this IServiceCollection services)
+        {
+            services.AddScoped<IScrapingJob, ScrapingJob>();
 
             return services;
         }

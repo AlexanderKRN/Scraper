@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Scraper.Domain.Entities;
-
-namespace Scraper.Domain.Common
+﻿namespace Scraper.Domain.Common
 {
     public static class ErrorList
     {

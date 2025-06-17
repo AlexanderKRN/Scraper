@@ -1,11 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using Scraper.Domain.Common;
 using Scraper.Domain.ValueObject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scraper.Domain.Entities
 {
@@ -13,27 +8,28 @@ namespace Scraper.Domain.Entities
     {
         public Guid Id { get; }
         public string Url { get; private set; } = null!;
+        public string ErrorScraping { get; set; } = string.Empty;
         public DateTime CreatedAt { get; private set; }
-        public ScrapingData Data { get; private set; } = null!;
+        public Headers Headers { get; private set; }
 
         private ScrapingNotice()
         {
         }
 
-        private ScrapingNotice(string url, ScrapingData data)
+        private ScrapingNotice(string url, Headers headers)
         {
+            Id = Guid.NewGuid();
             Url = url;
-            Data = data;
+            Headers = headers;
             CreatedAt = DateTime.UtcNow;
         }
 
         public static Result<ScrapingNotice, Error> Create(
             string url,
-            ScrapingData data,
-            long lenght)
+            Headers data)
         {
-            if (lenght > Constraints.MAX_DATA_SIZE)
-                return ErrorList.General.DataSizeInvalid();
+            if (url is null)
+                return ErrorList.General.ValueIsInvalid();
 
             return new ScrapingNotice(url, data);
         }

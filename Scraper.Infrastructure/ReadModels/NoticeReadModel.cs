@@ -1,11 +1,4 @@
-﻿using Scraper.Domain.ValueObject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Scraper.Infrastructure.ReadModels
+﻿namespace Scraper.Infrastructure.ReadModels
 {
     public class NoticeReadModel
     {

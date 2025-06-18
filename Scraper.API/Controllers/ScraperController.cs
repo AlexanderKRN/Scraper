@@ -6,16 +6,16 @@ namespace Scraper.API.Controllers
 {
     public class ScraperController : ApplicationController
     {
-        [HttpPost("path")]
+        [HttpPost("order")]
         [ApiVersionNeutral]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateList(
+        public async Task<IActionResult> Create(
+            [FromForm] SetOrderHandlerRequest request,
             [FromServices] SetOrderHandler handler,
-            //[FromBody] string filePath,
             CancellationToken ct)
         {
-            var result = await handler.Handle(ct);
+            var result = await handler.Handle(request, ct);
             if (result.IsFailure)
                 return BadRequest(result.Error);
 

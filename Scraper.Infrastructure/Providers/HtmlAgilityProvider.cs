@@ -12,6 +12,8 @@ namespace Scraper.Infrastructure.Providers;
 
 public class HtmlAgilityProvider : IHtmlAgilityProvider
 {
+    public const string TITLE_PATTERN_MAIN = @"[>][^<]+";
+    public const string TITLE_PATTERN_SLAVE = @"[^>]+";
     public const string ATTRIBUTE_PATTERN = @"[][\w-]+=""[^""]+";
     public const string ATTRIBUTE_SEPARATOR = "=\"";
 
@@ -22,15 +24,23 @@ public class HtmlAgilityProvider : IHtmlAgilityProvider
         _logger = logger;
     }
 
-    public async Task<Result<ScrapingNotice, Error>> GetDataByUrl(string url, CancellationToken ct)
+    public async Task<Result<ScrapingNotice, Error>> GetDataByUrl(
+        string url,
+        CancellationToken ct)
     {
         try
         {
             var web = new HtmlWeb();
 
-            var title = await GetNode(web, url, Constants.ScrapinConstants.TITLE_XPATH);
+            var title = await GetNode(
+                web,
+                url,
+                Constants.ScrapinConstants.TITLE_XPATH);
 
-            var metaAttributes = await GetNodeList(web, url, Constants.ScrapinConstants.META_XPATH);
+            var metaAttributes = await GetNodeList(
+                web,
+                url,
+                Constants.ScrapinConstants.META_XPATH);
 
             List<MetaLine> metaLines = [];
 
@@ -73,7 +83,7 @@ public class HtmlAgilityProvider : IHtmlAgilityProvider
         catch (Exception e)
         {
             _logger.LogError("Ошибка при работе HtmlAgility: {message}", e.Message);
-            return ErrorList.General.NotFound();
+            return ErrorList.General.WebScraperFault();
         }
     }
 
@@ -87,11 +97,12 @@ public class HtmlAgilityProvider : IHtmlAgilityProvider
 
         var nodeLine = node?.OuterHtml;
 
-        var nodeData = "TITLE"; ;// "TITLE"; // REGEX.MATCH----------------------------------------------------
-        if (nodeData is null)
-            return ErrorList.General.ValueIsInvalid();
+        var nodeDataMain = Regex.Match(nodeLine?? string.Empty, TITLE_PATTERN_MAIN);
+        var nodeDataSlave = Regex.Match(nodeDataMain.Value ?? string.Empty, TITLE_PATTERN_SLAVE);
+        if (nodeDataSlave.Value is null)
+            return ErrorList.General.WebScraperFault();
 
-        return nodeData;
+        return nodeDataSlave.Value;
     }
 
     private async Task<Result<List<HtmlNode>, Error>> GetNodeList(
@@ -103,7 +114,7 @@ public class HtmlAgilityProvider : IHtmlAgilityProvider
 
         var nodesData = nodes?.ToList();
         if (nodesData is null)
-            return ErrorList.General.ValueIsInvalid();
+            return ErrorList.General.WebScraperFault();
 
         return nodesData;
     }

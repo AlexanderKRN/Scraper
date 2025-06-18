@@ -16,6 +16,12 @@
                 return new("record.not.found", $"Запись не существует{forId}");
             }
 
+            public static Error WebScraperFault(Guid? id = null)
+            {
+                var forId = id == null ? "" : $" for Id '{id}'";
+                return new("web.scraper.fault", $"Ошибка при работе Web scraper{forId}");
+            }
+
             public static Error ValueIsInvalid(string? name = null)
             {
                 var label = name ?? "Значение";

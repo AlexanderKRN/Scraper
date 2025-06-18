@@ -22,7 +22,7 @@ namespace Scraper.API
 
             builder.Services
                 .AddApplication()
-                .AddInfrastructure(builder.Configuration);
+                .AddInfrastructure();
 
             var app = builder.Build();
 

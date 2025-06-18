@@ -7,10 +7,10 @@ namespace Scraper.Domain.Entities
     public class ScrapingNotice
     {
         public Guid Id { get; }
-        public string Url { get; private set; } = null!;
-        public string ErrorScraping { get; set; } = string.Empty;
+        public string Url { get; private set; }
+        public string? ErrorScraping { get; set; }
         public DateTime CreatedAt { get; private set; }
-        public Headers Headers { get; private set; }
+        public Headers? Headers { get; private set; }
 
         private ScrapingNotice()
         {
@@ -18,7 +18,6 @@ namespace Scraper.Domain.Entities
 
         private ScrapingNotice(string url, Headers headers)
         {
-            Id = Guid.NewGuid();
             Url = url;
             Headers = headers;
             CreatedAt = DateTime.UtcNow;
@@ -26,7 +25,7 @@ namespace Scraper.Domain.Entities
 
         public static Result<ScrapingNotice, Error> Create(
             string url,
-            Headers data)
+            Headers? data)
         {
             if (url is null)
                 return ErrorList.General.ValueIsInvalid();

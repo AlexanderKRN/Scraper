@@ -33,10 +33,10 @@ namespace Scraper.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.PrimitiveCollection<string[]>("Paths")
+                    b.PrimitiveCollection<string[]>("Urls")
                         .IsRequired()
                         .HasColumnType("text[]")
-                        .HasColumnName("paths");
+                        .HasColumnName("urls");
 
                     b.HasKey("Id")
                         .HasName("pk_orders");
@@ -60,7 +60,6 @@ namespace Scraper.Infrastructure.Migrations
                         .HasColumnName("error_scraping");
 
                     b.Property<string>("Headers")
-                        .IsRequired()
                         .HasColumnType("jsonb")
                         .HasColumnName("headers");
 

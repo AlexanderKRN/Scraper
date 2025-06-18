@@ -2,6 +2,6 @@
 {
     public interface IScrapingJob
     {
-        Task ProcessAsync();
+        Task ProcessAsync(Guid id);
     }
 }

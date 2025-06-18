@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -16,7 +17,7 @@ namespace Scraper.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    paths = table.Column<string[]>(type: "text[]", nullable: false)
+                    urls = table.Column<string[]>(type: "text[]", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,11 +30,10 @@ namespace Scraper.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     url = table.Column<string>(type: "text", nullable: false),
+                    error_scraping = table.Column<string>(type: "text", nullable: true),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    order_to_scrape_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    data_head = table.Column<string>(type: "text", nullable: false),
-                    data_meta = table.Column<string>(type: "text", nullable: false),
-                    data_title = table.Column<string>(type: "text", nullable: false)
+                    headers = table.Column<string>(type: "jsonb", nullable: true),
+                    order_to_scrape_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {

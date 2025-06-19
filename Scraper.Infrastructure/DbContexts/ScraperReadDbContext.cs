@@ -1,35 +1,33 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Scraper.Infrastructure.ReadModels;
+using Scraper.Domain.Entities;
 
-namespace Scraper.Infrastructure.DbContexts
+namespace Scraper.Infrastructure.DbContexts;
+
+public class ScraperReadDbContext : DbContext
 {
-    public class ScraperReadDbContext : DbContext
+    private readonly IConfiguration _configuration;
+
+    public ScraperReadDbContext(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration;
+        _configuration = configuration;
+    }
 
-        public ScraperReadDbContext(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
+    public DbSet<OrderToScrape> Orders => Set<OrderToScrape>();
 
-        public DbSet<OrderReadModel> Orders => Set<OrderReadModel>();
-        public DbSet<NoticeReadModel> Notices => Set<NoticeReadModel>();
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseNpgsql(_configuration.GetConnectionString("Scraper"));
+        optionsBuilder.UseSnakeCaseNamingConvention();
+        optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
+        optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+    }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(_configuration.GetConnectionString("Scraper"));
-            optionsBuilder.UseSnakeCaseNamingConvention();
-            optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
-            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfigurationsFromAssembly(
-                typeof(ScraperReadDbContext).Assembly,
-                type => type.FullName?.Contains("DbConfiguration.Read") ?? false);
-        }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(
+            typeof(ScraperReadDbContext).Assembly,
+            type => type.FullName?.Contains("DbConfiguration.Read") ?? false);
     }
 }

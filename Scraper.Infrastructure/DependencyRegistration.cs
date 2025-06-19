@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Scraper.Application.Features;
 using Scraper.Application.Providers;
 using Scraper.Infrastructure.DbContexts;
 using Scraper.Infrastructure.Jobs;
 using Scraper.Infrastructure.Providers;
+using Scraper.Infrastructure.Queries.Notices;
 using Scraper.Infrastructure.Repository;
 
 namespace Scraper.Infrastructure
@@ -17,7 +17,8 @@ namespace Scraper.Infrastructure
                 .AddDataStorages()
                 .AddProviders()
                 .AddJobs()
-                .AddRepositories();
+                .AddRepositories()
+                .AddQueries();
 
             return services;
         }
@@ -50,6 +51,13 @@ namespace Scraper.Infrastructure
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IOrderRepository, OrderRepository>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddQueries(this IServiceCollection services)
+        {
+            services.AddScoped<GetNoticesQuery>();
 
             return services;
         }

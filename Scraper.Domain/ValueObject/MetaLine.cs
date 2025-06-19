@@ -8,7 +8,11 @@ public class MetaLine
     public IReadOnlyList<Attribute> Attributes => _attributes;
     private readonly List<Attribute> _attributes = [];
 
-    private MetaLine(List<Attribute> attributes)
+    protected MetaLine()
+    {
+    }
+
+    protected MetaLine(List<Attribute> attributes)
     {
         _attributes = attributes.ToList();
     }

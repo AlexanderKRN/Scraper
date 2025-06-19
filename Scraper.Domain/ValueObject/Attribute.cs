@@ -8,7 +8,11 @@ public class Attribute
     public string Name { get; private set; } = null!;
     public string Value { get; private set; } = null!;
 
-    private Attribute(string name, string value)
+    protected Attribute()
+    {
+    }
+
+    protected Attribute(string name, string value)
     {
         Name = name;
         Value = value;

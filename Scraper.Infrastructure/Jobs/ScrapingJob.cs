@@ -2,8 +2,6 @@
 using Scraper.Domain.Entities;
 using Scraper.Application.Providers;
 using Scraper.Application.Features;
-using CSharpFunctionalExtensions;
-using Scraper.Domain.Common;
 
 namespace Scraper.Infrastructure.Jobs;
 

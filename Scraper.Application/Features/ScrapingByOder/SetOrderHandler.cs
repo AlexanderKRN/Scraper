@@ -1,26 +1,25 @@
 ﻿using CSharpFunctionalExtensions;
-using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Scraper.Application.Providers;
 using Scraper.Domain.Common;
 using Scraper.Domain.Entities;
-using System;
-using System.Text;
 
 namespace Scraper.Application.Features.ScrapingByOder;
 
 public class SetOrderHandler
 {
+    private readonly IScrapingJob _scrapingJob;
     private readonly IOrderRepository _orderRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<SetOrderHandler> _logger;
 
     public SetOrderHandler(
+        IScrapingJob scrapingJob,///////////////////////////////////
         IOrderRepository orderRepository,
         IUnitOfWork unitOfWork,
         ILogger<SetOrderHandler> logger)
     {
+        _scrapingJob = scrapingJob;
         _orderRepository = orderRepository;
         _unitOfWork = unitOfWork;
         _logger = logger;
@@ -41,6 +40,8 @@ public class SetOrderHandler
         await _orderRepository.Add(order.Value, ct);
 
         await _unitOfWork.SaveChangesAsync(ct);
+
+        await _scrapingJob.ProcessAsync(order.Value.Id); ///////////////////////////////////////
 
         _logger.LogInformation("Добавлен ордер, ID: {id}", order.Value.Id);
 

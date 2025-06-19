@@ -10,7 +10,11 @@ public class Headers
     public IReadOnlyList<MetaLine> Meta => _meta;
     private readonly List<MetaLine> _meta = [];
 
-    private Headers(string title, List<MetaLine> meta)
+    protected Headers()
+    {
+    }
+
+    protected Headers(string title, List<MetaLine> meta)
     {
         Title = title;
         _meta = meta.ToList();

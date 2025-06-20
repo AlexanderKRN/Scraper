@@ -1,9 +1,12 @@
-﻿namespace Scraper.Domain.Common
+﻿namespace Scraper.Domain.Common;
+
+/// <summary>
+/// Постоянные величины
+/// </summary>
+public readonly struct Constraints
 {
-    public readonly struct Constraints
-    {
-        public const long MAX_DATA_SIZE = 5000000;
-        
-        public const int LINKS_COUNT_LIMIT = 50;
-    }
+    /// <summary>
+    /// Ограничение количества ссылок в ордере
+    /// </summary>
+    public const int LINKS_COUNT_LIMIT = 50;
 }

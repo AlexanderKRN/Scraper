@@ -5,17 +5,31 @@ using Scraper.Domain.Entities;
 
 namespace Scraper.Infrastructure.DbContexts;
 
+/// <summary>
+/// Контекст базы данных для чтения
+/// </summary>
 public class ScraperReadDbContext : DbContext
 {
     private readonly IConfiguration _configuration;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="configuration"> Конфигурация </param>
     public ScraperReadDbContext(IConfiguration configuration)
     {
         _configuration = configuration;
     }
 
+    /// <summary>
+    /// Ордера
+    /// </summary>
     public DbSet<OrderToScrape> Orders => Set<OrderToScrape>();
 
+    /// <summary>
+    /// Конфигурация контекста
+    /// </summary>
+    /// <param name="optionsBuilder"> Конфигуратор опций </param>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(_configuration.GetConnectionString("Scraper"));
@@ -24,6 +38,10 @@ public class ScraperReadDbContext : DbContext
         optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
 
+    /// <summary>
+    /// Конфигурация чтения
+    /// </summary>
+    /// <param name="modelBuilder"> Конфигуратор опций </param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(

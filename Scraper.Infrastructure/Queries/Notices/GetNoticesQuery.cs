@@ -7,11 +7,20 @@ using Scraper.Domain.Entities;
 using Scraper.Infrastructure.DbContexts;
 
 namespace Scraper.Infrastructure.Queries.Notices;
+
+/// <summary>
+/// Обработка запроса получения отчётов
+/// </summary>
 public class GetNoticesQuery
 {
     private readonly ScraperReadDbContext _dbContext;
     private readonly ILogger<GetNoticesQuery> _logger;
 
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="dbContext"> Контекст базы данных </param>
+    /// <param name="logger"> Регистратор </param>
     public GetNoticesQuery(
         ScraperReadDbContext dbContext,
         ILogger<GetNoticesQuery> logger)
@@ -20,6 +29,12 @@ public class GetNoticesQuery
         _logger = logger;
     }
 
+    /// <summary>
+    /// Обработка запроса получение отчётов
+    /// </summary>
+    /// <param name="request"> Данные в запросе </param>
+    /// <param name="ct"> Токен отмены </param>
+    /// <returns></returns>
     public async Task<Result<GetNoticesResponse, Error>> Handle(
         GetNoticesRequest request,
         CancellationToken ct)
@@ -35,6 +50,10 @@ public class GetNoticesQuery
         return new GetNoticesResponse(order.Notices);
     }
 
+    /// <summary>
+    /// Создание файла с данными отчётов по запросу
+    /// </summary>
+    /// <param name="data"> данные отчётов </param>
     private void CreateFile(IEnumerable<ScrapingNotice> data)
     {
         string path = @"c:\temp\OutData.txt";

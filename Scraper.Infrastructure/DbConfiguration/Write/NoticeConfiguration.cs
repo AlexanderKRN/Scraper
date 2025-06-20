@@ -6,6 +6,9 @@ using Scraper.Domain.ValueObject;
 
 namespace Scraper.Infrastructure.DbConfiguration.Write;
 
+/// <summary>
+/// Конфигурация записи отчета
+/// </summary>
 public class NoticeConfiguration : IEntityTypeConfiguration<ScrapingNotice>
 {
     public void Configure(EntityTypeBuilder<ScrapingNotice> builder)

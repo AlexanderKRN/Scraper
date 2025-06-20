@@ -5,8 +5,18 @@ using Scraper.Infrastructure.Queries.Notices;
 
 namespace Scraper.API.Controllers;
 
+/// <summary>
+/// Контроллер приложения
+/// </summary>
 public class ScraperController : ApplicationController
 {
+    /// <summary>
+    /// Загрузка списка ссылок из файла и сохранение в виде ордера
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="handler"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
     [HttpPost("order")]
     [ApiVersionNeutral]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -23,6 +33,13 @@ public class ScraperController : ApplicationController
         return Ok(result.Value);
     }
 
+    /// <summary>
+    /// Выгрузка собранных данных по Id ордера
+    /// </summary>
+    /// <param name="handler"></param>
+    /// <param name="request"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
     [HttpGet("notices")]
     [ApiVersionNeutral]
     [ProducesResponseType(StatusCodes.Status200OK)]

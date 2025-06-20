@@ -4,6 +4,9 @@ using Scraper.Domain.Entities;
 
 namespace Scraper.Application.Features;
 
+/// <summary>
+/// Интерфейс репозитория работы с ордерами
+/// </summary>
 public interface IOrderRepository
 {
     Task Add(OrderToScrape order, CancellationToken ct);

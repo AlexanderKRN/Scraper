@@ -1,7 +1,9 @@
-﻿namespace Scraper.Application.Providers
+﻿namespace Scraper.Application.Providers;
+
+/// <summary>
+/// Интерфейс провайдера UnitOfWork
+/// </summary>
+public interface IUnitOfWork
 {
-    public interface IUnitOfWork
-    {
-        Task<int> SaveChangesAsync(CancellationToken ct);
-    }
+    Task<int> SaveChangesAsync(CancellationToken ct);
 }

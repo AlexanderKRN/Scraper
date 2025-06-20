@@ -4,6 +4,9 @@ using Scraper.Domain.Entities;
 
 namespace Scraper.Infrastructure.DbConfiguration.Write;
 
+/// <summary>
+/// Конфигурация записи ордера
+/// </summary>
 public class OrderConfiguration : IEntityTypeConfiguration<OrderToScrape>
 {
     public void Configure(EntityTypeBuilder<OrderToScrape> builder)

@@ -7,23 +7,54 @@ using Attribute = Scraper.Domain.ValueObject.Attribute;
 using System.Text.RegularExpressions;
 using Scraper.Domain.ValueObject;
 using Scraper.Application.Providers;
+using Scraper.Infrastructure.Common;
 
 namespace Scraper.Infrastructure.Providers;
 
+/// <summary>
+/// Провйдер функциональности библиотеки HtmlAgility
+/// </summary>
 public class HtmlAgilityProvider : IHtmlAgilityProvider
 {
+    #region Постоянные величины для обработки Regex
+    /// <summary>
+    /// Regex паттерн первичной выборки тега "title"
+    /// </summary>
     public const string TITLE_PATTERN_MAIN = @"[>][^<]+";
+
+    /// <summary>
+    /// Regex паттерн вторичной выборки тега "title"
+    /// </summary>
     public const string TITLE_PATTERN_SLAVE = @"[^>]+";
+
+    /// <summary>
+    /// Regex паттерн выборки аттрибутов
+    /// </summary>
     public const string ATTRIBUTE_PATTERN = @"[][\w-]+=""[^""]+";
+
+    /// <summary>
+    /// Regex паттерн разделения названия и значения аттрибута
+    /// </summary>
     public const string ATTRIBUTE_SEPARATOR = "=\"";
+    #endregion
 
     private readonly ILogger<HtmlAgilityProvider> _logger;
 
+    /// <summary>
+    /// Конструтор
+    /// </summary>
+    /// <param name="logger"> Регистратор </param>
     public HtmlAgilityProvider(ILogger<HtmlAgilityProvider> logger)
     {
         _logger = logger;
     }
 
+    /// <summary>
+    /// Получение данных сайта по URL-адресу
+    /// </summary>
+    /// <param name="url"> URL-адрес </param>
+    /// <param name="ct"> Токен отмены </param>
+    /// <returns></returns>
     public async Task<Result<ScrapingNotice, Error>> GetDataByUrl(
         string url,
         CancellationToken ct)
@@ -35,12 +66,12 @@ public class HtmlAgilityProvider : IHtmlAgilityProvider
             var title = await GetNode(
                 web,
                 url,
-                Constants.ScrapinConstants.TITLE_XPATH);
+                ScrapinConstants.TITLE_XPATH);
 
             var metaAttributes = await GetNodeList(
                 web,
                 url,
-                Constants.ScrapinConstants.META_XPATH);
+                ScrapinConstants.META_XPATH);
 
             List<MetaLine> metaLines = [];
 
@@ -50,6 +81,7 @@ public class HtmlAgilityProvider : IHtmlAgilityProvider
 
                 var error = string.Empty;
 
+                #region Обработка аттрибутов
                 foreach (Match match in Regex.Matches(
                     nodeAttribute.OuterHtml ?? string.Empty,
                     ATTRIBUTE_PATTERN))
@@ -62,6 +94,7 @@ public class HtmlAgilityProvider : IHtmlAgilityProvider
 
                     attributes.Add(attribute.Value);
                 };
+                #endregion
 
                 var metaLine = MetaLine.Create(attributes);
                 if (metaLine.IsFailure)
@@ -87,6 +120,15 @@ public class HtmlAgilityProvider : IHtmlAgilityProvider
         }
     }
 
+    #region Метод GetNode
+
+    /// <summary>
+    /// Полчение данных одного элемента сайта
+    /// </summary>
+    /// <param name="web"> Экземпляр HtmlWeb </param>
+    /// <param name="url"> URL-адрес </param>
+    /// <param name="xPath"> XPath путь к метаданным </param>
+    /// <returns></returns>
     private async Task<Result<string, Error>> GetNode(
         HtmlWeb? web, string url, string xPath)
     {
@@ -98,13 +140,22 @@ public class HtmlAgilityProvider : IHtmlAgilityProvider
         var nodeLine = node?.OuterHtml;
 
         var nodeDataMain = Regex.Match(nodeLine?? string.Empty, TITLE_PATTERN_MAIN);
-        var nodeDataSlave = Regex.Match(nodeDataMain.Value ?? string.Empty, TITLE_PATTERN_SLAVE);
+        var nodeDataSlave = Regex.Match(nodeDataMain.Value?? string.Empty, TITLE_PATTERN_SLAVE);
         if (nodeDataSlave.Value is null)
             return ErrorList.General.WebScraperFault();
 
         return nodeDataSlave.Value;
     }
+    #endregion
 
+    #region Метод GetNodeList 
+    /// <summary>
+    /// Полчение данных перечня элементов сайта
+    /// </summary>
+    /// <param name="web"> Экземпляр HtmlWeb </param>
+    /// <param name="url"> URL-адрес </param>
+    /// <param name="xPath"> XPath путь к метаданным </param>
+    /// <returns></returns>
     private async Task<Result<List<HtmlNode>, Error>> GetNodeList(
         HtmlWeb? web, string url, string xPath)
     {
@@ -118,4 +169,5 @@ public class HtmlAgilityProvider : IHtmlAgilityProvider
 
         return nodesData;
     }
+    #endregion
 }

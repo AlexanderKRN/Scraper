@@ -3,6 +3,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Scraper.Domain.Entities;
 
 namespace Scraper.Infrastructure.DbConfiguration.Read;
+
+/// <summary>
+/// Конфигурация чтения ордера
+/// </summary>
 public class OrderReadConfiguration : IEntityTypeConfiguration<OrderToScrape>
 {
     public void Configure(EntityTypeBuilder<OrderToScrape> builder)

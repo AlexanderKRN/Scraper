@@ -63,7 +63,8 @@ public class ScrapingNotice
         string url,
         Headers? headers)
     {
-        if (url is null)
+        url = url.Trim();
+        if (url.IsEmpty())
             return ErrorList.General.ValueIsInvalid();
 
         return new ScrapingNotice(url, headers);

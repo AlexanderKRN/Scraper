@@ -63,11 +63,11 @@ public class OrderToScrape
     /// </summary>
     /// <param name="urls"> Перечень URL-адресов </param>
     /// <returns></returns>
-    public static Result<OrderToScrape, Error> Create (
+    public static Result<OrderToScrape, Error> Create(
         IEnumerable<string> urls)
     {
         var listPathes = urls.ToList();
-        if (listPathes.Count >= Constraints.LINKS_COUNT_LIMIT)
+        if (listPathes.Count is 0 or >= Constraints.LINKS_COUNT_LIMIT)
             return ErrorList.General.ValueIsInvalid();
 
         return new OrderToScrape(urls);
